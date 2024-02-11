@@ -1,0 +1,33 @@
+<%%= form_with(model: <%= model_resource_name %>) do |form| %>
+  <%% if <%= singular_table_name %>.errors.any? %>
+    <div style="color: red">
+      <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+      <ul>
+        <%% <%= singular_table_name %>.errors.each do |error| %>
+          <li><%%= error.full_message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+<% attributes.each do |attribute| -%>
+  <div>
+<% if attribute.password_digest? -%>
+    <%%= form.password_field :password, class:"form-control", placeholder:"Password" %>
+  </div>
+
+  <div>
+    <%%= form.password_field :password_confirmation, class:"form-control", placeholder:"Confirm password" %>
+<% elsif attribute.attachments? -%>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true, class:"form-control", placeholder:"<%= attribute.column_name.titleize %>" %>
+<% else -%>
+    <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, class:"form-control", placeholder:"<%= attribute.column_name.titleize %>" %>
+<% end -%>
+  </div>
+
+<% end -%>
+  <div>
+    <%%= form.submit class:"btn btn-success" %>
+  </div>
+<%% end %>

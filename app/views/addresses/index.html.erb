@@ -1,0 +1,25 @@
+<h1>Addresses</h1>
+
+  <table class="table table-sm table-striped table-bordered table-hover">
+    <thead id="address" class="container text-center thead-dark">
+      <tr>
+        <% @addresses.columns.each do |column| %>
+          <th class="align-middle"><%= column.name.titleize %></th>
+        <% end %>
+        <th class="align-middle" colspan="3">Actions</th>
+     </tr>
+    </thead>
+    <tbody>
+      <% @addresses.each do |address| %>
+        <tr>
+          <% address.attributes.each do |key, value| %>
+            <td class="align-middle"><%=h value.to_s %></td>
+          <% end %>
+          <td class="align-middle"><%= link_to "Show", address, class:"btn btn-secondary btn-sm" %></td>
+          <td class="align-middle"><%= link_to "Edit", edit_address_path(address), class:"btn btn-secondary btn-sm" %> </td>
+          <td class="align-middle"><%= link_to "Delete", address, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger btn-sm" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<%= link_to "New address", new_address_path, class:"btn btn-secondary" %>

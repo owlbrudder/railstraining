@@ -1,0 +1,25 @@
+<h1><%= human_name.pluralize %></h1>
+
+  <table class="table table-sm table-striped table-bordered table-hover">
+    <thead id="<%= singular_table_name %>" class="container text-center thead-dark">
+      <tr>
+        <%% @<%= plural_table_name %>.columns.each do |column| %>
+          <th class="align-middle"><%%= column.name.titleize %></th>
+        <%% end %>
+        <th class="align-middle" colspan="3">Actions</th>
+     </tr>
+    </thead>
+    <tbody>
+      <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+        <tr>
+          <%% <%= singular_table_name %>.attributes.each do |key, value| %>
+            <td class="align-middle"><%%=h value.to_s %></td>
+          <%% end %>
+          <td class="align-middle"><%%= link_to "Show", <%= singular_table_name %>, class:"btn btn-secondary btn-sm" %></td>
+          <td class="align-middle"><%%= link_to "Edit", edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class:"btn btn-secondary btn-sm" %> </td>
+          <td class="align-middle"><%%= link_to "Delete", <%= singular_table_name %>, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger btn-sm" %></td>
+        </tr>
+      <%% end %>
+    </tbody>
+  </table>
+<%%= link_to "New <%= human_name.downcase %>", <%= new_helper(type: :path) %>, class:"btn btn-secondary" %>

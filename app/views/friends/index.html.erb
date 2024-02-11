@@ -1,0 +1,39 @@
+<% if user_signed_in? %>
+
+  <h1>Friends</h1>
+<thead id="friends">
+  <table class="table table-sm table-striped table-bordered table-hover">
+    <thead   class="container text-center thead-dark">
+      <tr>
+        <% @friends.columns.each do |column| %>
+          <% if column.name == 'first_name' %>
+            <th class="align-middle">Name</th>
+          <% elsif column.name == 'last_name' %>
+            <!--            do nothing-->
+          <% else %>
+            <th class="align-middle"><%= column.name.titleize %></th>
+          <% end %>
+        <% end %>
+     </tr>
+    </thead>
+    <tbody>
+      <% @friends.each do |friend| %>
+        <tr>
+          <% friend.attributes.each do |key, value| %>
+            <% if key == 'first_name' %>
+              <td class="align-middle"><%= link_to friend.first_name + ' ' + friend.last_name, friend %></td>
+            <% elsif key == 'last_name' %>
+<!--            do nothing-->
+            <% else %>
+              <td class="align-middle"><%=h value.to_s %></td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<%= link_to "New friend", new_friend_path, class:"btn btn-secondary" %>
+
+<% else %>
+  <%= render :partial => 'home/partial_index' %>
+<% end %>
